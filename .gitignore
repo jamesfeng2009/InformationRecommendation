@@ -1,0 +1,20 @@
+# 虚拟环境文件夹
+.venv/
+
+# Kiro配置文件夹
+.kiro/
+
+# Python缓存文件夹
+**/__pycache__/
+
+# Python编译文件
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# 测试缓存
+.pytest_cache/
+
+# 环境变量文件（敏感信息）
+.env
