@@ -8,6 +8,7 @@ from fastapi import FastAPI
 
 from app.api.auth import router as auth_router
 from app.api.rbac import router as rbac_router
+from app.api.users import router as users_router
 from app.core.config import get_settings
 from app.core.database import postgres_db
 from app.core.redis import redis_client
@@ -39,6 +40,7 @@ def create_app() -> FastAPI:
     # Include routers
     app.include_router(auth_router, prefix="/api/v1")
     app.include_router(rbac_router, prefix="/api/v1")
+    app.include_router(users_router, prefix="/api/v1")
     
     @app.get("/health")
     async def health_check():

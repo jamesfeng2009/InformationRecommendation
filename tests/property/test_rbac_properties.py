@@ -18,7 +18,7 @@ from hypothesis import given, strategies as st, settings, assume
 # We test the RBAC logic using a pure in-memory model to avoid database dependencies
 
 @dataclass
-class TestPermission:
+class MockPermission:
     """Test permission model."""
     id: int
     resource: str
@@ -28,25 +28,33 @@ class TestPermission:
         return hash((self.resource, self.action))
     
     def __eq__(self, other):
-        if not isinstance(other, TestPermission):
+        if not isinstance(other, MockPermission):
             return False
         return self.resource == other.resource and self.action == other.action
 
 
 @dataclass
-class TestRole:
+class MockRole:
     """Test role model."""
     id: int
     name: str
-    permissions: Set[TestPermission] = field(default_factory=set)
+    permissions: Set[MockPermission] = field(default_factory=set)
+    
+    def __hash__(self):
+        return hash(self.id)
+    
+    def __eq__(self, other):
+        if not isinstance(other, MockRole):
+            return False
+        return self.id == other.id
 
 
 @dataclass
-class TestUser:
+class MockUser:
     """Test user model."""
     id: int
     username: str
-    roles: Set[TestRole] = field(default_factory=set)
+    roles: Set[MockRole] = field(default_factory=set)
 
 
 class RBACModel:
@@ -59,9 +67,9 @@ class RBACModel:
     """
     
     def __init__(self):
-        self.users: Dict[int, TestUser] = {}
-        self.roles: Dict[int, TestRole] = {}
-        self.permissions: Dict[int, TestPermission] = {}
+        self.users: Dict[int, MockUser] = {}
+        self.roles: Dict[int, MockRole] = {}
+        self.permissions: Dict[int, MockPermission] = {}
         self._next_id = 1
     
     def _get_next_id(self) -> int:
@@ -69,51 +77,51 @@ class RBACModel:
         self._next_id += 1
         return id
 
-    def create_permission(self, resource: str, action: str) -> TestPermission:
+    def create_permission(self, resource: str, action: str) -> MockPermission:
         """Create a new permission."""
         perm_id = self._get_next_id()
-        perm = TestPermission(id=perm_id, resource=resource, action=action)
+        perm = MockPermission(id=perm_id, resource=resource, action=action)
         self.permissions[perm_id] = perm
         return perm
     
-    def create_role(self, name: str) -> TestRole:
+    def create_role(self, name: str) -> MockRole:
         """Create a new role."""
         role_id = self._get_next_id()
-        role = TestRole(id=role_id, name=name)
+        role = MockRole(id=role_id, name=name)
         self.roles[role_id] = role
         return role
     
-    def create_user(self, username: str) -> TestUser:
+    def create_user(self, username: str) -> MockUser:
         """Create a new user."""
         user_id = self._get_next_id()
-        user = TestUser(id=user_id, username=username)
+        user = MockUser(id=user_id, username=username)
         self.users[user_id] = user
         return user
     
-    def assign_permission_to_role(self, role: TestRole, permission: TestPermission) -> None:
+    def assign_permission_to_role(self, role: MockRole, permission: MockPermission) -> None:
         """Assign a permission to a role."""
         role.permissions.add(permission)
     
-    def assign_role_to_user(self, user: TestUser, role: TestRole) -> None:
+    def assign_role_to_user(self, user: MockUser, role: MockRole) -> None:
         """Assign a role to a user."""
         user.roles.add(role)
     
-    def revoke_role_from_user(self, user: TestUser, role: TestRole) -> None:
+    def revoke_role_from_user(self, user: MockUser, role: MockRole) -> None:
         """Revoke a role from a user."""
         user.roles.discard(role)
     
-    def revoke_permission_from_role(self, role: TestRole, permission: TestPermission) -> None:
+    def revoke_permission_from_role(self, role: MockRole, permission: MockPermission) -> None:
         """Revoke a permission from a role."""
         role.permissions.discard(permission)
     
-    def get_user_permissions(self, user: TestUser) -> Set[TestPermission]:
+    def get_user_permissions(self, user: MockUser) -> Set[MockPermission]:
         """Get all permissions for a user through their roles."""
         permissions = set()
         for role in user.roles:
             permissions.update(role.permissions)
         return permissions
     
-    def check_permission(self, user: TestUser, resource: str, action: str) -> bool:
+    def check_permission(self, user: MockUser, resource: str, action: str) -> bool:
         """
         Check if a user has a specific permission.
         
@@ -129,14 +137,14 @@ class RBACModel:
         return False
     
     def user_has_role_with_permission(
-        self, user: TestUser, resource: str, action: str
+        self, user: MockUser, resource: str, action: str
     ) -> bool:
         """
         Alternative implementation to verify check_permission.
         
         Returns True if user has at least one role that has the permission.
         """
-        target_perm = TestPermission(id=0, resource=resource, action=action)
+        target_perm = MockPermission(id=0, resource=resource, action=action)
         for role in user.roles:
             if target_perm in role.permissions:
                 return True
