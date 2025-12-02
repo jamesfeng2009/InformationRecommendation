@@ -4,7 +4,7 @@ from typing import AsyncGenerator
 
 from app.core.clickhouse import clickhouse_client
 from app.core.database import postgres_db
-from app.core.elasticsearch import elasticsearch_client
+from app.core.elasticsearch import get_elasticsearch_client, close_elasticsearch_client
 from app.core.redis import redis_client
 
 logger = logging.getLogger(__name__)
@@ -37,7 +37,8 @@ class ConnectionManager:
             raise
         
         try:
-            await elasticsearch_client.connect()
+            # Elasticsearch client is lazy-initialized on first use
+            await get_elasticsearch_client()
             logger.info("Elasticsearch connection established")
         except Exception as e:
             logger.error(f"Failed to connect to Elasticsearch: {e}")
@@ -80,7 +81,7 @@ class ConnectionManager:
             logger.warning(f"Error closing Redis connection: {e}")
         
         try:
-            await elasticsearch_client.disconnect()
+            await close_elasticsearch_client()
             logger.info("Elasticsearch connection closed")
         except Exception as e:
             logger.warning(f"Error closing Elasticsearch connection: {e}")
@@ -100,9 +101,16 @@ class ConnectionManager:
         Returns:
             dict: Health status for each database.
         """
+        es_healthy = False
+        try:
+            es_client = await get_elasticsearch_client()
+            es_healthy = await es_client.ping()
+        except Exception:
+            pass
+        
         return {
             "postgresql": postgres_db._engine is not None,
-            "elasticsearch": await elasticsearch_client.health_check(),
+            "elasticsearch": es_healthy,
             "redis": await redis_client.health_check(),
             "clickhouse": await clickhouse_client.health_check(),
         }
