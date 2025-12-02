@@ -1,7 +1,3 @@
-"""
-Content cleaner for removing advertisements, navigation, and sensitive words.
-Requirements: 1.3, 14.2
-"""
 import re
 from dataclasses import dataclass, field
 from typing import List, Optional, Set, Pattern

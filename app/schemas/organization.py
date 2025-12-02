@@ -1,7 +1,3 @@
-"""
-Organization management schemas for request/response validation.
-Requirements: 11.1, 11.2, 11.3, 11.4
-"""
 from datetime import datetime
 from typing import List, Optional
 

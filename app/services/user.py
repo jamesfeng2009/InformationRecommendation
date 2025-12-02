@@ -1,13 +1,3 @@
-"""
-User management service for CRUD operations.
-Requirements: 10.2, 10.3, 10.4
-
-Provides:
-- User CRUD operations (create, read, update, delete)
-- Batch update operations with atomicity
-- User query with filters
-- Password reset functionality
-"""
 from dataclasses import dataclass
 from typing import List, Optional
 

@@ -1,7 +1,3 @@
-"""
-News and user interaction models.
-Requirements: 5.1, 15.1, 15.2
-"""
 from datetime import datetime
 from typing import TYPE_CHECKING, List, Optional
 

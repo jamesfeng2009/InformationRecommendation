@@ -1,13 +1,3 @@
-"""
-RBAC API endpoints for role and permission management.
-Requirements: 12.1, 12.4
-
-Endpoints:
-- Role management: CRUD operations for roles
-- Permission management: CRUD operations for permissions
-- Assignment: Assign permissions to roles, roles to users
-- Permission checking: Check user permissions
-"""
 from typing import Annotated, List
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status

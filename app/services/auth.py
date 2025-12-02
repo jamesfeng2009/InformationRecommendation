@@ -1,7 +1,3 @@
-"""
-Authentication service for user login, logout, and session management.
-Requirements: 10.1, 18.1
-"""
 import json
 import uuid
 from datetime import datetime, timezone

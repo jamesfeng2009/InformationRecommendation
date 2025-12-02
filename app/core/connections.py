@@ -1,7 +1,3 @@
-"""
-Unified connection manager for all database connections.
-Provides lifecycle management for application startup and shutdown.
-"""
 import logging
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator

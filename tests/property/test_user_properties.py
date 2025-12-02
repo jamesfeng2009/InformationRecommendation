@@ -1,9 +1,3 @@
-"""
-Property-based tests for user management.
-
-**Feature: intelligent-recommendation-system, Property 18: Batch Update Atomicity**
-**Validates: Requirements 10.3**
-"""
 import string
 from dataclasses import dataclass
 from typing import List, Optional, Set

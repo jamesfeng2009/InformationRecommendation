@@ -1,13 +1,3 @@
-"""
-RBAC (Role-Based Access Control) service for permission management.
-Requirements: 12.1, 12.2
-
-Provides:
-- Role CRUD operations
-- Permission assignment to roles
-- User-role binding
-- Permission checking
-"""
 from typing import List, Optional, Set
 
 from sqlalchemy import delete, select
@@ -44,10 +34,6 @@ class PermissionExistsError(RBACError):
 
 
 class RBACService:
-    """
-    RBAC service for managing roles, permissions, and user-role bindings.
-    Requirements: 12.1, 12.2
-    """
     
     def __init__(self, db: AsyncSession):
         self.db = db
@@ -112,15 +98,15 @@ class RBACService:
     ) -> Role:
         """
         Update role information.
-        
+
         Args:
             role_id: Role ID to update.
             name: New role name (optional).
             description: New description (optional).
-        
+
         Returns:
             Updated Role instance.
-        
+
         Raises:
             RoleNotFoundError: If role not found.
             RoleExistsError: If new name conflicts with existing role.

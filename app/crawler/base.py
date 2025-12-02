@@ -1,7 +1,3 @@
-"""
-Base crawler framework with rate limiting, user-agent rotation, and proxy support.
-Requirements: 1.1, 1.7
-"""
 import asyncio
 import random
 import time

@@ -1,12 +1,3 @@
-"""
-Property-based tests for authentication.
-
-**Feature: intelligent-recommendation-system, Property 17: Authentication Correctness**
-**Validates: Requirements 10.1**
-
-**Feature: intelligent-recommendation-system, Property 24: Password Policy Compliance**
-**Validates: Requirements 21.1**
-"""
 import string
 
 import pytest

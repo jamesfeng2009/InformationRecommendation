@@ -1,7 +1,3 @@
-"""
-Schemas for crawler API endpoints.
-Requirements: 1.6
-"""
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 

@@ -1,13 +1,3 @@
-"""
-Permission checking middleware and decorators for RBAC enforcement.
-Requirements: 12.2, 12.3
-
-Provides:
-- Permission decorator for endpoints
-- Menu permission filtering
-- Data permission filtering
-- Current user dependency with permission checking
-"""
 from functools import wraps
 from typing import Annotated, Callable, List, Optional, Tuple
 

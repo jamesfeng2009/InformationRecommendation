@@ -1,7 +1,3 @@
-"""
-Topic and sharing models for news topic management.
-Requirements: 8.1, 9.1, 9.2
-"""
 from datetime import datetime
 from typing import TYPE_CHECKING, List, Optional
 

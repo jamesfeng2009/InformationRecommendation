@@ -1,7 +1,3 @@
-"""
-FastAPI application entry point.
-Intelligent Information Recommendation System.
-"""
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI

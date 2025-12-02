@@ -56,7 +56,6 @@ class DepartmentHasChildrenError(OrganizationServiceError):
 
 
 class DepartmentDepthExceededError(OrganizationServiceError):
-    """Department tree depth would exceed the maximum allowed (3 levels)."""
     def __init__(self, max_depth: int = 2):
         self.max_depth = max_depth
         super().__init__(
@@ -66,7 +65,6 @@ class DepartmentDepthExceededError(OrganizationServiceError):
 
 
 class CircularReferenceError(OrganizationServiceError):
-    """Moving department would create a circular reference."""
     pass
 
 
@@ -86,10 +84,6 @@ class DepartmentNode:
 
 
 class OrganizationService:
-    """
-    Organization management service handling department CRUD operations.
-    Requirements: 11.1, 11.2, 11.3, 11.4
-    """
     
     MAX_DEPTH = 2  # 3 levels: root (0) -> level 1 (1) -> level 2 (2)
     
@@ -107,27 +101,7 @@ class OrganizationService:
         description: Optional[str] = None,
         sort_order: int = 0,
     ) -> Department:
-        """
-        Create a new department with ID generation.
-        
-        Args:
-            name: Department name.
-            parent_id: Parent department ID (None for root).
-            manager: Responsible person.
-            contact: Contact information.
-            description: Department description.
-            sort_order: Sort order for display.
-        
-        Returns:
-            Created Department instance.
-        
-        Raises:
-            DepartmentNotFoundError: If parent_id is invalid.
-            DepartmentDepthExceededError: If adding would exceed 3 levels.
-        
-        Requirements: 11.1, 11.2
-        """
-        # Validate parent and check depth
+
         parent_depth = 0
         if parent_id is not None:
             parent = await self.get_department_with_parent_chain(parent_id)
@@ -205,14 +179,6 @@ class OrganizationService:
         return result.scalar_one_or_none()
     
     async def get_department_tree(self) -> List[DepartmentNode]:
-        """
-        Get the complete department tree structure.
-        
-        Returns:
-            List of root DepartmentNode objects with nested children.
-        
-        Requirements: 11.1
-        """
         # Get all departments
         stmt = select(Department).order_by(Department.sort_order, Department.id)
         result = await self.db.execute(stmt)
@@ -298,25 +264,6 @@ class OrganizationService:
         description: Optional[str] = None,
         sort_order: Optional[int] = None,
     ) -> Department:
-        """
-        Update a department's information.
-        
-        Args:
-            department_id: Department ID to update.
-            name: New department name (optional).
-            manager: New manager (optional).
-            contact: New contact info (optional).
-            description: New description (optional).
-            sort_order: New sort order (optional).
-        
-        Returns:
-            Updated Department instance.
-        
-        Raises:
-            DepartmentNotFoundError: If department not found.
-        
-        Requirements: 11.2
-        """
         department = await self.get_department(department_id)
         if not department:
             raise DepartmentNotFoundError(f"Department with ID {department_id} not found")
@@ -341,23 +288,7 @@ class OrganizationService:
         department_id: int,
         new_parent_id: Optional[int],
     ) -> Department:
-        """
-        Move a department to a new parent (change hierarchy).
-        
-        Args:
-            department_id: Department ID to move.
-            new_parent_id: New parent department ID (None for root).
-        
-        Returns:
-            Updated Department instance.
-        
-        Raises:
-            DepartmentNotFoundError: If department or new parent not found.
-            DepartmentDepthExceededError: If move would exceed 3 levels.
-            CircularReferenceError: If move would create circular reference.
-        
-        Requirements: 11.4
-        """
+
         department = await self.get_department_with_children(department_id)
         if not department:
             raise DepartmentNotFoundError(f"Department with ID {department_id} not found")

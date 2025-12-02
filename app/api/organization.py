@@ -1,14 +1,3 @@
-"""
-Organization management API endpoints.
-Requirements: 11.1, 11.2, 11.3, 11.4
-
-Endpoints:
-- POST /api/v1/departments - Create department
-- GET /api/v1/departments/tree - Get department tree
-- PUT /api/v1/departments/{id} - Update department
-- DELETE /api/v1/departments/{id} - Delete department
-- POST /api/v1/departments/{id}/move - Move department to new parent
-"""
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status

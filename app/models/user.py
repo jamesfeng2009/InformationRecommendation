@@ -1,7 +1,3 @@
-"""
-User and Department models for user management and organization structure.
-Requirements: 10.1, 10.4, 11.1, 11.2
-"""
 from datetime import datetime
 from typing import TYPE_CHECKING, List, Optional
 

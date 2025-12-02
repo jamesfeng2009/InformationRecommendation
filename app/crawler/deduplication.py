@@ -1,7 +1,3 @@
-"""
-Deduplication service for detecting and filtering duplicate news content.
-Requirements: 1.5
-"""
 import hashlib
 import re
 from dataclasses import dataclass

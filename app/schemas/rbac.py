@@ -1,7 +1,3 @@
-"""
-RBAC schemas for request/response validation.
-Requirements: 12.1, 12.4
-"""
 from datetime import datetime
 from typing import List, Optional
 

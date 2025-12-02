@@ -1,7 +1,3 @@
-"""
-Authentication schemas for request/response validation.
-Requirements: 10.1
-"""
 from datetime import datetime
 from typing import Optional
 

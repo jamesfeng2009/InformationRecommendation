@@ -1,7 +1,3 @@
-"""
-Elasticsearch client configuration and connection management.
-Provides async client for full-text search operations.
-"""
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Optional
 

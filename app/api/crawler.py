@@ -1,7 +1,3 @@
-"""
-Crawler API endpoints for managing news crawling operations.
-Requirements: 1.6
-"""
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status

@@ -1,15 +1,3 @@
-"""
-Property-based tests for news crawler.
-
-**Feature: intelligent-recommendation-system, Property 1: News Extraction Completeness**
-**Validates: Requirements 1.2**
-
-**Feature: intelligent-recommendation-system, Property 2: Content Cleaning Preservation**
-**Validates: Requirements 1.3**
-
-**Feature: intelligent-recommendation-system, Property 3: Deduplication Idempotence**
-**Validates: Requirements 1.5**
-"""
 import re
 from datetime import datetime
 from typing import List, Optional

@@ -1,12 +1,3 @@
-"""
-Property-based tests for RBAC permission enforcement.
-
-**Feature: intelligent-recommendation-system, Property 21: RBAC Permission Enforcement**
-**Validates: Requirements 12.1, 12.2**
-
-A user SHALL have access to a resource if and only if at least one of their
-assigned roles has the required permission for that resource.
-"""
 from dataclasses import dataclass, field
 from typing import Dict, List, Set, Tuple
 

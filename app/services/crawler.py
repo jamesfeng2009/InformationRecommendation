@@ -1,7 +1,3 @@
-"""
-Crawler service for managing news crawling operations.
-Requirements: 1.1, 1.6
-"""
 import asyncio
 import uuid
 from datetime import datetime

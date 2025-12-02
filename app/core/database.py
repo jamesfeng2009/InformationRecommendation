@@ -1,7 +1,3 @@
-"""
-PostgreSQL database connection and session management using SQLAlchemy async.
-Provides async context managers for database sessions.
-"""
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 

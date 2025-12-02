@@ -1,7 +1,3 @@
-"""
-RBAC (Role-Based Access Control) models for permission management.
-Requirements: 12.1, 12.2
-"""
 from datetime import datetime
 from typing import TYPE_CHECKING, List
 

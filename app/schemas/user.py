@@ -1,7 +1,3 @@
-"""
-User management schemas for request/response validation.
-Requirements: 10.2, 10.3, 10.4, 10.5
-"""
 from datetime import datetime
 from typing import List, Optional
 

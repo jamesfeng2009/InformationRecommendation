@@ -1,13 +1,3 @@
-"""
-Authentication API endpoints.
-Requirements: 10.1
-
-Endpoints:
-- POST /api/v1/auth/login - User login
-- POST /api/v1/auth/logout - User logout
-- POST /api/v1/auth/refresh - Refresh tokens
-- GET /api/v1/auth/me - Get current user
-"""
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status

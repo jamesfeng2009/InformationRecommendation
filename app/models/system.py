@@ -1,7 +1,3 @@
-"""
-System models for logging, sensitive words, and news sources.
-Requirements: 13.1, 13.2, 14.1
-"""
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 

@@ -1,7 +1,3 @@
-"""
-ClickHouse client configuration and connection management.
-Provides async client for analytics and statistics operations.
-"""
 from contextlib import asynccontextmanager
 from typing import Any, AsyncGenerator, Optional
 

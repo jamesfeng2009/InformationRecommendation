@@ -1,12 +1,3 @@
-"""
-Property-based tests for organization tree structure.
-
-**Feature: intelligent-recommendation-system, Property 19: Organization Tree Depth Constraint**
-**Validates: Requirements 11.1**
-
-**Feature: intelligent-recommendation-system, Property 20: Department Deletion Protection**
-**Validates: Requirements 11.3**
-"""
 import pytest
 from hypothesis import given, strategies as st, settings, assume
 

@@ -1,8 +1,3 @@
-"""
-Unit tests for SQLAlchemy data models.
-Tests model relationships, constraints, and validations.
-Requirements: 23.1
-"""
 import pytest
 from datetime import datetime
 

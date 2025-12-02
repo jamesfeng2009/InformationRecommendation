@@ -1,7 +1,3 @@
-"""
-Redis client configuration and connection management.
-Provides async client for caching and session management.
-"""
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Optional
 

@@ -1,7 +1,3 @@
-"""
-News page parser for extracting article content from HTML.
-Requirements: 1.2
-"""
 import re
 from dataclasses import dataclass, field
 from datetime import datetime

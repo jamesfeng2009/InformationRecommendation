@@ -1,7 +1,3 @@
-"""
-Application configuration using pydantic-settings.
-Manages all database connection settings and application parameters.
-"""
 from functools import lru_cache
 from typing import Optional
 

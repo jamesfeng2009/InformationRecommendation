@@ -1,16 +1,3 @@
-"""
-User management API endpoints.
-Requirements: 10.2, 10.3, 10.4, 10.5
-
-Endpoints:
-- POST /api/v1/users - Create user
-- GET /api/v1/users - List users with filters
-- GET /api/v1/users/{id} - Get user by ID
-- PUT /api/v1/users/{id} - Update user
-- DELETE /api/v1/users/{id} - Delete user
-- POST /api/v1/users/batch-update - Batch update users
-- POST /api/v1/users/{id}/reset-password - Reset user password
-"""
 from typing import Annotated, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status

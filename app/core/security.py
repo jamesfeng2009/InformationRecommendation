@@ -1,7 +1,3 @@
-"""
-Security utilities for password hashing, verification, policy validation, and JWT tokens.
-Requirements: 10.1, 18.1, 21.1
-"""
 import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
