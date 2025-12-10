@@ -107,7 +107,6 @@ NEWS_INDEX_MAPPING = {
 class ElasticsearchIndexService:
     """
     Service for managing Elasticsearch indices.
-    Requirements: 19.4
     """
     
     def __init__(self, es_client: AsyncElasticsearch, index_prefix: str = "news"):
@@ -214,8 +213,6 @@ class ElasticsearchIndexService:
             
         Returns:
             dict: Reindex response with statistics
-            
-        Requirements: 19.4 - Support zero-downtime reindexing
         """
         response = await self.es_client.reindex(
             body={

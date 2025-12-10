@@ -71,7 +71,6 @@ class CrawlTask:
 class CrawlerService:
     """
     Service for managing news crawling operations.
-    Requirements: 1.1, 1.6
     """
     
     def __init__(self):

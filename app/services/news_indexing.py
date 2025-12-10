@@ -10,7 +10,6 @@ from app.models.news import News
 class NewsIndexingService:
     """
     Service for indexing news documents in Elasticsearch.
-    Requirements: 19.2
     """
     
     def __init__(self, es_client: AsyncElasticsearch, index_name: str = "news"):
@@ -77,8 +76,6 @@ class NewsIndexingService:
             
         Returns:
             bool: True if indexing successful
-            
-        Requirements: 19.2 - Index news documents on creation
         """
         doc = self._news_to_document(news)
         
@@ -99,8 +96,6 @@ class NewsIndexingService:
             
         Returns:
             bool: True if update successful
-            
-        Requirements: 19.2 - Update index on news modification
         """
         doc = self._news_to_document(news)
         
@@ -144,8 +139,6 @@ class NewsIndexingService:
             
         Returns:
             dict: Statistics with success and error counts
-            
-        Requirements: 19.2 - Batch indexing for initial data load
         """
         def generate_actions():
             """Generate bulk indexing actions."""
