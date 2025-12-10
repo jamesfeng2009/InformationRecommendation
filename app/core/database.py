@@ -114,3 +114,7 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
     """
     async with postgres_db.session() as session:
         yield session
+
+
+# Alias for compatibility
+get_db = get_db_session

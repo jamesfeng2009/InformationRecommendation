@@ -109,3 +109,7 @@ async def get_redis_client() -> AsyncGenerator[Redis, None]:
     """
     async with redis_client.get_client() as client:
         yield client
+
+
+# Alias for compatibility
+get_redis = get_redis_client

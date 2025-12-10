@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 
 from app.core.config import Settings, get_settings
 from app.core.database import PostgresDatabase, Base
-from app.core.elasticsearch import ElasticsearchClient
+from app.core.elasticsearch import get_elasticsearch_client, close_elasticsearch_client, ElasticsearchSettings
 from app.core.redis import RedisClient
 from app.core.clickhouse import ClickHouseClient
 
@@ -74,19 +74,29 @@ class TestPostgresDatabase:
             _ = db.session_factory
 
 
-class TestElasticsearchClient:
-    """Tests for Elasticsearch client."""
+class TestElasticsearchSettings:
+    """Tests for Elasticsearch settings."""
     
-    def test_initial_state(self):
-        """Test client starts uninitialized."""
-        client = ElasticsearchClient()
-        assert client._client is None
+    def test_default_settings(self):
+        """Test default Elasticsearch settings."""
+        settings = ElasticsearchSettings()
+        assert settings.elasticsearch_url == "http://localhost:9200"
+        assert settings.elasticsearch_index_prefix == "news"
+        assert settings.elasticsearch_timeout == 30
+        assert settings.elasticsearch_max_retries == 3
     
-    def test_client_raises_before_connect(self):
-        """Test accessing client before connect raises error."""
-        client = ElasticsearchClient()
-        with pytest.raises(RuntimeError, match="Elasticsearch not initialized"):
-            _ = client.client
+    @pytest.mark.asyncio
+    @patch('app.core.elasticsearch.AsyncElasticsearch')
+    async def test_get_elasticsearch_client(self, mock_es):
+        """Test getting Elasticsearch client."""
+        mock_instance = AsyncMock()
+        mock_es.return_value = mock_instance
+        
+        client = await get_elasticsearch_client()
+        assert client is not None
+        mock_es.assert_called_once()
+        
+        await close_elasticsearch_client()
 
 
 class TestRedisClient:

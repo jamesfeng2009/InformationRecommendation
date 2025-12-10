@@ -299,3 +299,87 @@ class AuthService:
         """Check if token is blacklisted."""
         blacklist_key = f"{self.BLACKLIST_PREFIX}{hash(token)}"
         return await self.redis.exists(blacklist_key) > 0
+
+
+# ==================== FastAPI Dependencies ====================
+
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from redis.asyncio import Redis
+
+from app.core.database import get_db
+from app.core.redis import get_redis
+
+# Security scheme for extracting Bearer tokens
+security = HTTPBearer()
+
+
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis)
+) -> User:
+    """
+    FastAPI dependency to get current authenticated user.
+    
+    Args:
+        credentials: Bearer token from Authorization header.
+        db: Database session.
+        redis: Redis connection.
+    
+    Returns:
+        Current authenticated user.
+    
+    Raises:
+        HTTPException: If authentication fails.
+    """
+    auth_service = AuthService(db, redis)
+    
+    try:
+        user = await auth_service.get_current_user(credentials.credentials)
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid authentication credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        return user
+    except TokenExpiredError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token has expired",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    except TokenInvalidError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+async def get_optional_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: AsyncSession = Depends(get_db),
+    redis: Redis = Depends(get_redis)
+) -> Optional[User]:
+    """
+    FastAPI dependency to get current user if authenticated, None otherwise.
+    
+    Args:
+        credentials: Bearer token from Authorization header.
+        db: Database session.
+        redis: Redis connection.
+    
+    Returns:
+        Current authenticated user or None.
+    """
+    if not credentials:
+        return None
+    
+    auth_service = AuthService(db, redis)
+    
+    try:
+        return await auth_service.get_current_user(credentials.credentials)
+    except (TokenError, Exception):
+        return None
